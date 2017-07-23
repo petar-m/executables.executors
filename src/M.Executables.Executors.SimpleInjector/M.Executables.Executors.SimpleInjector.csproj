@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Authors>Petar Marinov</Authors>
+    <Company>Petar Marinov</Company>
+    <Description>An  implementation of IExecutor and IExecutorAsync utilizing SimpleInjector as IoC container.</Description>
+    <Copyright>Copyright (c) 2017 Petar Marinov</Copyright>
+    <PackageLicenseUrl>https://github.com/petar-m/executables.executors/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/petar-m/executables.executors</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
+    <PackageTags>command executor executables</PackageTags>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="M.Executables" Version="2.0.0" />
+    <PackageReference Include="SimpleInjector" Version="4.0.8" />
+  </ItemGroup>
+
+</Project>
