@@ -1,33 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0</TargetFrameworks>
     <Authors>Petar Marinov</Authors>
     <Company />
     <Copyright>Copyright (c) 2017 Petar Marinov</Copyright>
     <PackageTags>command executor executables</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgraded to use M.Executables 2.0.0.</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <Description>A very simple implementation of IExecutor and IExecutorAsync.</Description>
     <PackageLicenseUrl>https://github.com/petar-m/executables.executors/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/petar-m/executables.executors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <PackageReference Include="System" />
-    <PackageReference Include="System.Threading.Tasks" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.1' ">
-    <PackageReference Include="System.Runtime" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-  </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="M.Executables" Version="1.0.1" />
+    <PackageReference Include="M.Executables" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
