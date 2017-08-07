@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="M.Executables" Version="2.0.1" />
+    <PackageReference Include="M.Executables" Version="2.0.2" />
     <PackageReference Include="SimpleInjector" Version="4.0.8" />
   </ItemGroup>
 

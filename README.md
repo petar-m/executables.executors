@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/M.Executables.Executors.Simple.svg)](https://www.nuget.org/packages/M.Executables.Executors.Simple)
 
-A very simple implementation of IExecutor and IExecutorAsync ([https://github.com/petar-m/executables](https://github.com/petar-m/executables)).  
+A very simple implementation of IExecutor and IExecutorAsync ([M.Executables](https://github.com/petar-m/executables)).  
   
 This is not a "real world" implementation, rather a starting point for something useful.  
 
@@ -10,7 +10,7 @@ This is not a "real world" implementation, rather a starting point for something
   
 [![NuGet](https://img.shields.io/nuget/v/M.Executables.Executors.SimpleInjector.svg)](https://www.nuget.org/packages/M.Executables.Executors.SimpleInjector)
 
-An implementation of IExecutor and IExecutorAsync ([https://github.com/petar-m/executables](https://github.com/petar-m/executables)) utilizing [SimpleInjector](https://simpleinjector.org) as IoC container.  
+An implementation of IExecutor and IExecutorAsync ([M.Executables](https://github.com/petar-m/executables)) utilizing [SimpleInjector](https://simpleinjector.org) as IoC container.  
   
 Additional interfaces:  
 
@@ -28,15 +28,15 @@ error handler:
 
     public class ExecutorErrorHandler : IErrorHandler
     {
-		// called from the executor
+        // called from the executor
         public void Handle(Exception exception, Scope scope)
         {
             // log...
 
-			// indicate there was error
+            // indicate there was error
             scope.SetItem("HasError", true);
 
-			// force IScopeEndHandler to be called
+            // force IScopeEndHandler to be called
             scope.Dispose();
         }
     }  
