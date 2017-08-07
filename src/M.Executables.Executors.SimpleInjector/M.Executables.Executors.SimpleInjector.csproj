@@ -18,7 +18,7 @@
     <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.0\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -26,7 +26,7 @@
     <DocumentationFile>bin\Debug\net45\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.3|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard1.0\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
