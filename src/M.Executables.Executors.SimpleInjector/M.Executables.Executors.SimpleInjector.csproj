@@ -13,9 +13,27 @@
     <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
     <PackageTags>command executor executables</PackageTags>
     <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.0\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+    <DocumentationFile>bin\Debug\net45\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.0\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\M.Executables.Executors.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+    
   <ItemGroup>
     <PackageReference Include="M.Executables" Version="2.0.2" />
     <PackageReference Include="SimpleInjector" Version="4.0.8" />
