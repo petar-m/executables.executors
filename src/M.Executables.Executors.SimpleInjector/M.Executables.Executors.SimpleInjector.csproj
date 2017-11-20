@@ -12,10 +12,10 @@
     <PackageProjectUrl>https://github.com/petar-m/executables.executors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
     <PackageTags>command executor executables</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2.0</AssemblyVersion>
-    <FileVersion>1.0.2.0</FileVersion>
+    <PackageReleaseNotes>New IScopedContext that will replace IExecutorScope in future.</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard1.3|AnyCPU'">
