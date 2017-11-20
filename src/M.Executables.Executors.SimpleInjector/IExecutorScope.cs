@@ -5,6 +5,7 @@ namespace M.Executables.Executors.SimpleInjector
     /// <summary>
     /// Represents a scope for executing executables.
     /// </summary>
+    [Obsolete("IExecutorScope will be removed in next major version. Please use IScopedContext instead.")]
     public interface IExecutorScope : IDisposable
     {
         /// <summary>

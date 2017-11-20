@@ -20,7 +20,9 @@ Additional interfaces:
   
 *NOTE: SimpleInjectorExecutor propagates the exception after calling IErrorHandler.Handle leaving the environment to decide what to do.*
   
-`IExecutorScope` - an alternative scope provider when the environment does not provide a way to start/end scope, e.g. service executing recurring tasks in background.  
+`IExecutorScope` - **obsolete** 
+
+`IScopedContext` - an alternative scope provider when the environment does not provide a way to start/end scope, e.g. service executing recurring tasks in background.  
 
 Example:  
 
@@ -70,7 +72,7 @@ setup:
 	container.Register<IErrorHandler, ExecutorErrorHandler>(Lifestyle.Singleton);
 	container.Register<IScopeEndHandler, ScopeEndHandler>(Lifestyle.Scoped);
   
-	container.Register<IExecutorScope, ExecutorScope>(Lifestyle.Transient);  
+	container.Register<IScopedContext, ScopedContext>(Lifestyle.Singleton);  
 
 usage:
 
@@ -104,11 +106,13 @@ usage:
 	
 	...
 
-	// out of scoping context (ExecutorScope ensures that IScopeEndHandler will be called)
-    using (var scope = container.GetInstance<IExecutorScope>())
-    {
-        scope.Executor.Execute<SomeExecutable>();
-    }  
+	// outside of OWIN pipeline
+	// ScopedContext will create new scope with IScopeEndHandler set, 
+	// execute the action passing arguments resolved from the scope and dispose the scope
+    var scope = container.GetInstance<IScopedContext>());
+	scope.Execute<IExecutor>(executor => executor.Execute<SomeExecutable>());
+	
+      
 
 
  

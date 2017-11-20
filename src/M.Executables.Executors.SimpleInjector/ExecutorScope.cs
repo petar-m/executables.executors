@@ -1,4 +1,5 @@
-﻿using SimpleInjector;
+﻿using System;
+using SimpleInjector;
 using SimpleInjector.Lifestyles;
 
 namespace M.Executables.Executors.SimpleInjector
@@ -6,6 +7,7 @@ namespace M.Executables.Executors.SimpleInjector
     /// <summary>
     /// Represents a SimpleInjector scope for executing executables.
     /// </summary>
+    [Obsolete("ExecutorScope will be removed in next major version. Please use ScopedContext instead.")]
     public class ExecutorScope : IExecutorScope
     {
         private readonly Container container;
