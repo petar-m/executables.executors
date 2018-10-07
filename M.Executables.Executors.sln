@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M.Executables.Executors.Sim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M.Executables.Executors.SimpleInjector", "src\M.Executables.Executors.SimpleInjector\M.Executables.Executors.SimpleInjector.csproj", "{F9FAF7E6-9E11-4125-ABEC-E51F2C0CA13E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "M.Executables.Executors.NetCore", "src\M.Executables.Executors.NetCore\M.Executables.Executors.NetCore.csproj", "{127C5211-37BE-4BEC-8D41-56F8B5D9700D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{F9FAF7E6-9E11-4125-ABEC-E51F2C0CA13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9FAF7E6-9E11-4125-ABEC-E51F2C0CA13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9FAF7E6-9E11-4125-ABEC-E51F2C0CA13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{127C5211-37BE-4BEC-8D41-56F8B5D9700D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{127C5211-37BE-4BEC-8D41-56F8B5D9700D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{127C5211-37BE-4BEC-8D41-56F8B5D9700D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{127C5211-37BE-4BEC-8D41-56F8B5D9700D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +36,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B4D677CC-C0AA-43BC-9C43-DC81C6BBD3D6} = {17C7B8B9-1F52-44E6-B66D-8C1F29503769}
 		{F9FAF7E6-9E11-4125-ABEC-E51F2C0CA13E} = {17C7B8B9-1F52-44E6-B66D-8C1F29503769}
+		{127C5211-37BE-4BEC-8D41-56F8B5D9700D} = {17C7B8B9-1F52-44E6-B66D-8C1F29503769}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74825B3B-B9FD-4C17-AF5E-D3EF38F0FFF1}
 	EndGlobalSection
 EndGlobal

@@ -6,6 +6,30 @@ A very simple implementation of IExecutor and IExecutorAsync ([M.Executables](ht
   
 This is not a "real world" implementation, rather a starting point for something useful.  
 
+
+
+## Executables.Executors.NetCoreExecutor  
+  
+[![NuGet](https://img.shields.io/nuget/v/M.Executables.Executors.NetCore.svg)](https://www.nuget.org/packages/M.Executables.Executors.NetCore)
+
+An implementation of IExecutor and IExecutorAsync ([M.Executables](https://github.com/petar-m/executables))  utilizing .NET Core dependecy injection.  
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        ...
+        // Registers NetCoreExecutor with scoped lifetime
+        services.AddScopedNetCoreExecutor()
+                // Registers all IExecutable and IExecutableAsync direct implemetations 
+				// exported from the specified assemblies with transient lifetime
+                .AddTransientExecutables(Assembly.GetExecutingAssembly());
+        ...
+    }
+  
+If `NetCoreExecutor` is used in ASP.NET Core context it will use `IHttpContextAccessor.HttpContext.RequestServices` to resolve executables.  
+Otherwise it will use dedicated scope from `IServiceScopeFactory` for each call to Execute/ExecuteAsync.  
+
+
+
 ## Executables.Executors.SimpleInjector  
   
 [![NuGet](https://img.shields.io/nuget/v/M.Executables.Executors.SimpleInjector.svg)](https://www.nuget.org/packages/M.Executables.Executors.SimpleInjector)
