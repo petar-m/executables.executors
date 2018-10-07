@@ -19,8 +19,8 @@ An implementation of IExecutor and IExecutorAsync ([M.Executables](https://githu
         ...
         // Registers NetCoreExecutor with scoped lifetime
         services.AddScopedNetCoreExecutor()
-                // Registers all IExecutable and IExecutableAsync direct implemetations 
-				// exported from the specified assemblies with transient lifetime
+                // Registers all IExecutable and IExecutableAsync direct implemetations
+                // exported from the specified assemblies with transient lifetime
                 .AddTransientExecutables(Assembly.GetExecutingAssembly());
         ...
     }
@@ -136,10 +136,3 @@ usage:
     var scope = container.GetInstance<IScopedContext>());
 	scope.Execute<IExecutor>(executor => executor.Execute<SomeExecutable>());
 	
-      
-
-
- 
-
- 
-  
