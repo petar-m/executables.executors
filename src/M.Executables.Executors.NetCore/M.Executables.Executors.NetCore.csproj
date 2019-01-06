@@ -10,15 +10,15 @@
     <Authors>Petar Marinov</Authors>
     <Company>Petar Marinov</Company>
     <Description>An implementation of IExecutor and IExecutorAsync utilizing .NET Core dependecy injection.</Description>
-    <Copyright>Copyright (c) 2018 Petar Marinov</Copyright>
+    <Copyright>Copyright (c) 2019 Petar Marinov</Copyright>
     <PackageLicenseUrl>https://github.com/petar-m/executables.executors/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/petar-m/executables.executors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
     <PackageTags>command executor executables</PackageTags>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
-    <Version>1.0.0</Version>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <PackageReleaseNotes>Removed IHttpContextAccessor dependency, IExecutionInterceptor support.</PackageReleaseNotes>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
