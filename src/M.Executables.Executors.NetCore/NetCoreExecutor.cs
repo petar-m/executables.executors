@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
@@ -10,19 +9,13 @@ namespace M.Executables.Executors.NetCore
     /// </summary>
     public class NetCoreExecutor : IExecutor, IExecutorAsync
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         /// <summary>
         /// Creates a new instance of NetCoreExecutor.
         /// </summary>
-        /// <param name="httpContextAccessor">IHttpContextAccessor used to access RequestServices.</param>
         /// <param name="serviceScopeFactory">IServiceScopeFactory used to create scope in case the executor is invoked out of request scope.</param>
-        public NetCoreExecutor(IHttpContextAccessor httpContextAccessor, IServiceScopeFactory serviceScopeFactory)
-        {
-            _httpContextAccessor = httpContextAccessor;
-            _serviceScopeFactory = serviceScopeFactory;
-        }
+        public NetCoreExecutor(IServiceScopeFactory serviceScopeFactory) => _serviceScopeFactory = serviceScopeFactory;
 
         /// <summary>
         /// Resolves an instance of TExecutableVoid using IServiceProvider for current request if available or using dedicated scope and executes it synchronously.
@@ -100,37 +93,19 @@ namespace M.Executables.Executors.NetCore
 
         private TResult Execute<T, TResult>(Func<T, TResult> execute)
         {
-            if (_httpContextAccessor?.HttpContext?.RequestServices != null)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                // Execute in request scope
-                var executable = _httpContextAccessor.HttpContext.RequestServices.GetRequiredService<T>();
+                var executable = scope.ServiceProvider.GetRequiredService<T>();
                 return execute(executable);
-            }
-            else
-            {
-                using (var scope = _serviceScopeFactory.CreateScope())
-                {
-                    var executable = scope.ServiceProvider.GetRequiredService<T>();
-                    return execute(executable);
-                }
             }
         }
 
         private async Task<TResult> ExecuteAsync<T, TResult>(Func<T, Task<TResult>> execute)
         {
-            if (_httpContextAccessor?.HttpContext?.RequestServices != null)
+            using (var scope = _serviceScopeFactory.CreateScope())
             {
-                // Execute in request scope
-                var executable = _httpContextAccessor.HttpContext.RequestServices.GetRequiredService<T>();
+                var executable = scope.ServiceProvider.GetRequiredService<T>();
                 return await execute(executable);
-            }
-            else
-            {
-                using (var scope = _serviceScopeFactory.CreateScope())
-                {
-                    var executable = scope.ServiceProvider.GetRequiredService<T>();
-                    return await execute(executable);
-                }
             }
         }
     }
