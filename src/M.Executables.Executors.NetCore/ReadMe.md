@@ -9,4 +9,7 @@ An implementation of IExecutor and IExecutorAsync ([M.Executables](https://githu
 #### 2.0  
 
 - **(breaking)** `IServiceCollection` extension methods `AddScopedNetCoreExecutor ` and `AddTransientExecutables` are removed. Executor and executables registration is straight-forward and these methods were not covering all possible scenarios.  
-- **(breaking)** Constructor dependency on `IHttpContextAccessor` is removed. Now every executable is resolved and executed in new scope. This makes the executor ignorant of hosting environment. This also removes scoped dependencies which can create hidden coupling of executables.
+- **(breaking)** Constructor dependency on `IHttpContextAccessor` is removed. Now every executable is resolved and executed in new scope. This makes the executor ignorant of hosting environment. This also removes scoped dependencies which can create hidden coupling of executables.  
+- M.Executables 2.1 features:
+  - `NetCoreExecutor` now implements the new `IExecutors` interface.
+  - `NetCoreExecutor` supports the interceptors via the new `IExecutionInterceptor` interface.

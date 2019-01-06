@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="M.Executables" Version="2.0.2" />
+    <PackageReference Include="M.Executables" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
