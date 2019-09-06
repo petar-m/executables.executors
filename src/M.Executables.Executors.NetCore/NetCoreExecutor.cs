@@ -1,32 +1,32 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace M.Executables.Executors.NetCore
 {
     /// <summary>
-    /// Resolves an executable instance using IServiceProvider for current request if available or in dedicated scope and executes it.
+    /// Resolves an executable instance in dedicated scope and executes it.
     /// </summary>
-    public class NetCoreExecutor : IExecutors
+    public class NetCoreExecutor : IExecutor
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         /// <summary>
-        /// Creates a new instance of NetCoreExecutor.
+        /// Creates a new instance of NetCoreExecutor class.
         /// </summary>
-        /// <param name="serviceScopeFactory">IServiceScopeFactory used to create scope in case the executor is invoked out of request scope.</param>
+        /// <param name="serviceScopeFactory">IServiceScopeFactory used to create scope for each execution.</param>
         public NetCoreExecutor(IServiceScopeFactory serviceScopeFactory) => _serviceScopeFactory = serviceScopeFactory;
 
         /// <summary>
-        /// Resolves an instance of TExecutableVoid using IServiceProvider for current request if available or using dedicated scope and executes it synchronously.
+        /// Resolves an instance of TExecutableVoid using dedicated scope and executes it synchronously.
         /// </summary>
         /// <typeparam name="TExecutableVoid">The type of the executable to resolve.</typeparam>
         public void Execute<TExecutableVoid>() where TExecutableVoid : class, IExecutableVoid =>
             Execute<TExecutableVoid, IEmpty, IEmpty>((x, _) => { x.Execute(); return null; }, null);
 
         /// <summary>
-        /// Resolves an instance of TExecutableVoid using IServiceProvider for current request if available or using dedicated scope and executes it synchronously.
+        /// Resolves an instance of TExecutableVoid using dedicated scope and executes it synchronously.
         /// </summary>
         /// <typeparam name="TExecutableVoid">The type of the executable to resolve.</typeparam>
         /// <typeparam name="TInput">The type of the parameter to pass to the executable.</typeparam>
@@ -35,7 +35,7 @@ namespace M.Executables.Executors.NetCore
             Execute<TExecutableVoid, TInput, IEmpty>((x, i) => { x.Execute(i); return null; }, input);
 
         /// <summary>
-        /// Resolves an instance of TExecutable using IServiceProvider for current request if available or using dedicated scope and executes it synchronously.
+        /// Resolves an instance of TExecutable using dedicated scope and executes it synchronously.
         /// </summary>
         /// <typeparam name="TExecutable">The type of the executable to resolve.</typeparam>
         /// <typeparam name="TResult">The type of the result returned from the executable.</typeparam>
@@ -44,125 +44,157 @@ namespace M.Executables.Executors.NetCore
             Execute<TExecutable, IEmpty, TResult>((x, _) => x.Execute(), null);
 
         /// <summary>
-        /// Resolves an instance of TExecutable using IServiceProvider for current request if available or using dedicated scope and executes it synchronously.
+        /// Resolves an instance of TExecutable using dedicated scope and executes it synchronously.
         /// </summary>
         /// <typeparam name="TExecutable">The type of the executable to resolve.</typeparam>
         /// <typeparam name="TInput">The type of the parameter to pass to the executable.</typeparam>
         /// <typeparam name="TResult">The type of the result returned from the executable.</typeparam>
         /// <param name="input">An instance of TInput to pass to the executable.</param>
-        /// <returns></returns>
+        /// <returns>An instance of TResult.</returns>
         public TResult Execute<TExecutable, TInput, TResult>(TInput input) where TExecutable : class, IExecutable<TInput, TResult> =>
             Execute<TExecutable, TInput, TResult>((x, i) => x.Execute(i), input);
-
-        /// <summary>
-        /// Resolves an instance of TExecutableVoidAsync using IServiceProvider for current request if available or using dedicated scope and executes it asynchronously.
-        /// </summary>
-        /// <typeparam name="TExecutableVoidAsync">The type of the executable to resolve.</typeparam>
-        /// <returns>A Task representing the asynchronous execution result.</returns>
-        public async Task ExecuteAsync<TExecutableVoidAsync>() where TExecutableVoidAsync : class, IExecutableVoidAsync =>
-            await ExecuteAsync<TExecutableVoidAsync, IEmpty, IEmpty>(async (x, _) => { await x.ExecuteAsync(); return null; }, null);
-
-        /// <summary>
-        /// Resolves an instance of TExecutableVoidAsync using IServiceProvider for current request if available or using dedicated scope and executes it asynchronously.
-        /// </summary>
-        /// <typeparam name="TExecutableVoidAsync">The type of the executable to resolve.</typeparam>
-        /// <typeparam name="TInput">The type of the parameter to pass to the executable.</typeparam>
-        /// <param name="input">An instance of TInput to pass to the executable.</param>
-        /// <returns>A Task representing the asynchronous execution result.</returns>
-        public async Task ExecuteAsync<TExecutableVoidAsync, TInput>(TInput input) where TExecutableVoidAsync : class, IExecutableVoidAsync<TInput> =>
-            await ExecuteAsync<TExecutableVoidAsync, TInput, IEmpty>(async (x, i) => { await x.ExecuteAsync(i); return null; }, input);
-
-        /// <summary>
-        /// Resolves an instance of TExecutableAsync using IServiceProvider for current request if available or using dedicated scope and executes it asynchronously.
-        /// </summary>
-        /// <typeparam name="TExecutableAsync">The type of the executable to resolve.</typeparam>
-        /// <typeparam name="TResult">The type of the result returned from the executable.</typeparam>
-        /// <returns>A Task representing the asynchronous execution result.</returns>
-        public async Task<TResult> ExecuteAsync<TExecutableAsync, TResult>() where TExecutableAsync : class, IExecutableAsync<TResult> =>
-            await ExecuteAsync<TExecutableAsync, IEmpty, TResult>(async (x, _) => await x.ExecuteAsync(), null);
-
-        /// <summary>
-        /// Resolves an instance of TExecutableAsync using IServiceProvider for current request if available or using dedicated scope and executes it asynchronously.
-        /// </summary>
-        /// <typeparam name="TExecutableAsync">The type of the executable to resolve.</typeparam>
-        /// <typeparam name="TInput">The type of the parameter to pass to the executable.</typeparam>
-        /// <typeparam name="TResult">The type of the result returned from the executable.</typeparam>
-        /// <param name="input">An instance of TInput to pass to the executable.</param>
-        /// <returns>A Task representing the asynchronous execution result.</returns>
-        public async Task<TResult> ExecuteAsync<TExecutableAsync, TInput, TResult>(TInput input) where TExecutableAsync : class, IExecutableAsync<TInput, TResult> =>
-            await ExecuteAsync<TExecutableAsync, TInput, TResult>(async (x, i) => await x.ExecuteAsync(i), input);
 
         private TResult Execute<T, TInput, TResult>(Func<T, TInput, TResult> execute, TInput input)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var executable = scope.ServiceProvider.GetRequiredService<T>();
-                IExecutionInterceptor[] interceptors = GetInterceptors(scope);
+                var interceptors = GetInterceptors<T, TInput, TResult>(scope);
 
-                InterceptBefore(executable, input, interceptors);
+                interceptors.Before(executable, input);
 
-                TResult result = default(TResult);
+                TResult result = default;
                 try
                 {
                     result = execute(executable, input);
                 }
                 catch (Exception exception)
                 {
-                    InterceptAfter(executable, input, result, interceptors, exception);
+                    interceptors.After(executable, input, result, exception);
                     throw;
                 }
 
-                InterceptAfter(executable, input, result, interceptors);
+                interceptors.After(executable, input, result, null);
                 return result;
             }
         }
 
-        private async Task<TResult> ExecuteAsync<T, TInput, TResult>(Func<T, TInput, Task<TResult>> execute, TInput input)
+        private static IInterceptors<TExecutable, TInput, TResult> GetInterceptors<TExecutable, TInput, TResult>(IServiceScope scope)
         {
-            using (var scope = _serviceScopeFactory.CreateScope())
+            var generalInterceptors = scope.ServiceProvider.GetServices<IExecutionInterceptor>();
+            var general = generalInterceptors as IExecutionInterceptor[] ?? generalInterceptors.ToArray();
+            var specificInterceptors = scope.ServiceProvider.GetServices<IExecutionInterceptor<TExecutable, TInput, TResult>>();
+            var specific = specificInterceptors as IExecutionInterceptor<TExecutable, TInput, TResult>[] ?? specificInterceptors.ToArray();
+
+            if (specific.Length > 0 || general.Length > 0)
             {
-                var executable = scope.ServiceProvider.GetRequiredService<T>();
-                IExecutionInterceptor[] interceptors = GetInterceptors(scope);
-
-                InterceptBefore(executable, input, interceptors);
-
-                TResult result = default(TResult);
-                try
+                var firstSpecific = specific.Where(x => x is IDiscardOtherInterceptors).OrderBy(x => x.OrderingIndex).FirstOrDefault();
+                var firstGeneral = general.Where(x => x is IDiscardOtherInterceptors).OrderBy(x => x.OrderingIndex).FirstOrDefault();
+                if (firstSpecific != null && firstGeneral != null)
                 {
-                    result = await execute(executable, input);
-                }
-                catch (Exception exception)
-                {
-                    InterceptAfter(executable, input, result, interceptors, exception);
-                    throw;
+                    if (firstSpecific.OrderingIndex <= firstGeneral.OrderingIndex || firstSpecific is IDiscardNonGenericInterceptors)
+                    {
+                        return new Interceptors<TExecutable, TInput, TResult>(Array.Empty<IExecutionInterceptor>(), new[] { firstSpecific });
+                    }
+                    else
+                    {
+                        return new Interceptors<TExecutable, TInput, TResult>(new[] { firstGeneral }, Array.Empty<IExecutionInterceptor<TExecutable, TInput, TResult>>());
+                    }
                 }
 
-                InterceptAfter(executable, input, result, interceptors);
-                return result;
+                if (firstSpecific != null)
+                {
+                    return new Interceptors<TExecutable, TInput, TResult>(Array.Empty<IExecutionInterceptor>(), new[] { firstSpecific });
+                }
+
+                if (firstGeneral != null)
+                {
+                    return new Interceptors<TExecutable, TInput, TResult>(new[] { firstGeneral }, Array.Empty<IExecutionInterceptor<TExecutable, TInput, TResult>>());
+                }
+
+                if (specificInterceptors.Any(x => x is IDiscardNonGenericInterceptors))
+                {
+                    return new Interceptors<TExecutable, TInput, TResult>(Array.Empty<IExecutionInterceptor>(), specific);
+                }
+
+                return new Interceptors<TExecutable, TInput, TResult>(general, specific);
+            }
+
+            return EmptyInterceptors<TExecutable, TInput, TResult>.Instance;
+        }
+
+        private interface IInterceptors<TExecutable, TInput, TResult>
+        {
+            void After(TExecutable executable, TInput input, TResult result, Exception exception);
+
+            void Before(TExecutable executable, TInput input);
+        }
+
+        private class EmptyInterceptors<TExecutable, TInput, TResult> : IInterceptors<TExecutable, TInput, TResult>
+        {
+            private EmptyInterceptors()
+            {
+            }
+
+            public static readonly EmptyInterceptors<TExecutable, TInput, TResult> Instance = new EmptyInterceptors<TExecutable, TInput, TResult>();
+
+            public void After(TExecutable executable, TInput input, TResult result, Exception exception)
+            {
+            }
+
+            public void Before(TExecutable executable, TInput input)
+            {
             }
         }
 
-        private static IExecutionInterceptor[] GetInterceptors(IServiceScope scope)
+        private class Interceptors<TExecutable, TInput, TResult> : IInterceptors<TExecutable, TInput, TResult>
         {
-            return scope.ServiceProvider
-                        .GetServices<IExecutionInterceptor>()
-                        .OrderBy(x => x.OrderingIndex)
-                        .ToArray();
-        }
+            private readonly IExecutionInterceptor<TExecutable, TInput, TResult>[] _specificInterceptors;
+            private readonly IExecutionInterceptor[] _generalInterceptors;
+            private readonly (bool isGeneral, int ordering, int index)[] _interceptors;
 
-        private static void InterceptBefore<T, TInput>(T executable, TInput input, IExecutionInterceptor[] interceptors)
-        {
-            for(int i = 0; i < interceptors.Length; i++)
+            public Interceptors(
+                IExecutionInterceptor[] generalInterceptors,
+                IExecutionInterceptor<TExecutable, TInput, TResult>[] specificInterceptors)
             {
-                interceptors[i].Before(executable, input);
+                _specificInterceptors = specificInterceptors;
+                _generalInterceptors = generalInterceptors;
+                _interceptors = _specificInterceptors.Select((x, i) => (isGeneral: false, ordering: x.OrderingIndex, index: i))
+                                     .Concat(_generalInterceptors.Select((x, i) => (isGeneral: true, ordering: x.OrderingIndex, index: i)))
+                                     .OrderBy(x => x.ordering)
+                                     .ToArray();
             }
-        }
 
-        private static void InterceptAfter<T, TInput, TResult>(T executable, TInput input, TResult result, IExecutionInterceptor[] interceptors, Exception exception = null)
-        {
-            for (int i = interceptors.Length - 1; i >= 0; i--)
+            public  void After(TExecutable executable, TInput input, TResult result, Exception exception)
             {
-                interceptors[i].After(executable, input, result, exception);
+                for (int i = _interceptors.Length - 1; i >= 0; i--)
+                {
+                    var (isGeneral, _, index) = _interceptors[i];
+                    if (isGeneral)
+                    {
+                        _generalInterceptors[index].After(executable, input, result, exception);
+                    }
+                    else
+                    {
+                        _specificInterceptors[index].After(executable, input, result, exception);
+                    }
+                }
+            }
+
+            public  void Before(TExecutable executable, TInput input)
+            {
+                for (int i = 0; i < _interceptors.Length; i++)
+                {
+                    var (isGeneral, _, index) = _interceptors[i];
+                    if (isGeneral)
+                    {
+                        _generalInterceptors[index].Before(executable, input);
+                    }
+                    else
+                    {
+                        _specificInterceptors[index].Before(executable, input);
+                    }
+                }
             }
         }
     }

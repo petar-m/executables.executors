@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -11,14 +12,14 @@
     <Company>Petar Marinov</Company>
     <Description>An implementation of IExecutor and IExecutorAsync utilizing .NET Core dependecy injection.</Description>
     <Copyright>Copyright (c) 2019 Petar Marinov</Copyright>
-    <PackageLicenseUrl>https://github.com/petar-m/executables.executors/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/petar-m/executables.executors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/petar-m/executables.executors</RepositoryUrl>
     <PackageTags>command executor executables</PackageTags>
-    <PackageReleaseNotes>Removed IHttpContextAccessor dependency, IExecutionInterceptor support.</PackageReleaseNotes>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <FileVersion>2.0.0.0</FileVersion>
+    <PackageReleaseNotes>Breaking changes - separate sync and async implementations, interceptors handling.</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>3.0.0</Version>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="M.Executables" Version="2.1.0" />
+    <PackageReference Include="M.Executables" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
